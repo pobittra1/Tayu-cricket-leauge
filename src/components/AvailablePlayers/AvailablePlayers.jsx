@@ -6,7 +6,7 @@ const AvailablePlayers = ({ playersPromise }) => {
     console.log(players);
     return (
         <div>
-            <h2 className="text-3xl font-bold capitalize text-green-400 my-2">total players: {players.length}</h2>
+            <h2 className="text-xl font-bold capitalize text-green-400 my-2">total players: {players.length}</h2>
             <div className="players-card-container grid grid-cols-3 gap-2">
                 {
                     players.map(player => <Player key={player.id} player={player}></Player>)

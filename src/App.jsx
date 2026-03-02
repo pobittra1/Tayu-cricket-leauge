@@ -1,5 +1,5 @@
 
-import { Suspense } from 'react';
+import { Suspense, useState } from 'react';
 import './App.css'
 import AvailablePlayers from './components/AvailablePlayers/AvailablePlayers'
 import Navbar from './components/Navbar/Navbar'
@@ -10,16 +10,25 @@ import SelectedPlayers from './components/SelectedPlayers/SelectedPlayers'
 const playersPromise = fetch("/players.json").then(res => res.json());
 
 function App() {
-
+  const [toggleAvailableSelectedBtn, SetToggleAvailableSelectedBtn] = useState(true);
 
   return (
     <>
       <Navbar></Navbar>
       <div className="players-container w-10/12 mx-auto my-4">
-        <Suspense fallback={<span className="loading loading-dots loading-xl"></span>}>
-          <AvailablePlayers playersPromise={playersPromise}></AvailablePlayers>
-        </Suspense>
-        <SelectedPlayers></SelectedPlayers>
+        <div className="toggle-bar flex justify-between items-center">
+          <h2 className='capitalize text-3xl text-slate-500 font-bold'>{toggleAvailableSelectedBtn ? "available players" : "selected players"}</h2>
+          <div className="toggle-btn flex gap-2">
+            <button onClick={() => SetToggleAvailableSelectedBtn(true)} className={`border py-2 cursor-pointer px-4 ${toggleAvailableSelectedBtn && "bg-green-500"}`}>Available (25)</button>
+            <button onClick={() => SetToggleAvailableSelectedBtn(false)} className={`border py-2 cursor-pointer px-4 ${!toggleAvailableSelectedBtn && "bg-green-500"}`}>Selected (0)</button>
+          </div>
+        </div>
+        {
+          toggleAvailableSelectedBtn ? <Suspense fallback={<span className="loading loading-dots loading-xl"></span>}>
+            <AvailablePlayers playersPromise={playersPromise}></AvailablePlayers>
+          </Suspense> : <SelectedPlayers></SelectedPlayers>
+        }
+
       </div>
     </>
   )
