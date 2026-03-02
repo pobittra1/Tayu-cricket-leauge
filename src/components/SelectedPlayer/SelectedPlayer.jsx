@@ -1,4 +1,4 @@
-const SelectedPlayer = ({ player }) => {
+const SelectedPlayer = ({ player, handleRemoveSelectedPlayer }) => {
 
     if (player.length === 0) {
         return (
@@ -39,7 +39,7 @@ const SelectedPlayer = ({ player }) => {
                     </div>
 
                     {/* Delete Button */}
-                    <button className="btn btn-sm btn-error btn-outline">
+                    <button onClick={() => handleRemoveSelectedPlayer(player.id)} className="btn btn-sm btn-error btn-outline">
                         Delete
                     </button>
 

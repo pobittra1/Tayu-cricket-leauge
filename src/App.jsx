@@ -17,6 +17,20 @@ function App() {
   const [selectedPlayers, setSelectedPlayers] = useState([]);
   const totalPlayers = 25;
 
+  const handleRemoveSelectedPlayer = (id) => {
+
+    //get removed player to update available balance i mean return the balance.
+    const removedPlayer = selectedPlayers.find(player => player.id === id);
+
+    const remainingSelectedPlayers = selectedPlayers.filter(player => player.id !== id);
+    setSelectedPlayers(remainingSelectedPlayers);
+
+    if (removedPlayer) {
+      // return the balance of deleted player into main balance.
+      setAvailableBalance(availableBalance + removedPlayer.price);
+    }
+  }
+
 
 
 
@@ -42,7 +56,7 @@ function App() {
               setSelectedPlayers={setSelectedPlayers}
             ></AvailablePlayers>
           </Suspense> : selectedPlayers.length === 0 ? <EmptySelectPlayer></EmptySelectPlayer> :
-            <SelectedPlayers selectedPlayers={selectedPlayers}></SelectedPlayers>
+            <SelectedPlayers selectedPlayers={selectedPlayers} handleRemoveSelectedPlayer={handleRemoveSelectedPlayer} ></SelectedPlayers>
         }
 
       </div>
