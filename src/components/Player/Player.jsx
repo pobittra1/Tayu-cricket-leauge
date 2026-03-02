@@ -1,15 +1,12 @@
 import React, { useState } from "react";
 
-const Player = ({ player, availableBalance, setAvailableBalance }) => {
+const Player = ({ player, availableBalance, setAvailableBalance, selectedPlayers, setSelectedPlayers }) => {
 
     const { name, role, country, image, price, rating, batting_style,
         bowling_style } = player;
     const [isSelected, setIsSelected] = useState(false);
-    const [selectedPlayers, setSelectedPlayers] = useState([]);
-    console.log(selectedPlayers);
 
     const handleUpdateTotalBalanceAfterChoosePlayer = (player) => {
-        console.log(player);
         if (availableBalance < player.price) {
             alert("Your Balance is too low");
             return;
@@ -19,7 +16,6 @@ const Player = ({ player, availableBalance, setAvailableBalance }) => {
         setSelectedPlayers(newPlayers);
 
     }
-    console.log(selectedPlayers);
 
     return (
         <div className="card bg-base-100 shadow-xl hover:shadow-2xl transition duration-300">
