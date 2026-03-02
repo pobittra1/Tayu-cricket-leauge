@@ -6,6 +6,7 @@ import Navbar from './components/Navbar/Navbar'
 import SelectedPlayer from './components/SelectedPlayer/SelectedPlayer'
 import EmptySelectPlayer from './components/EmptySelectPlayer/EmptySelectPlayer';
 import SelectedPlayers from './components/SelectedPlayers/SelectedPlayers';
+import { toast, ToastContainer } from 'react-toastify';
 
 
 //load players data here
@@ -13,7 +14,7 @@ const playersPromise = fetch("/players.json").then(res => res.json());
 
 function App() {
   const [toggleAvailableSelectedBtn, SetToggleAvailableSelectedBtn] = useState(true);
-  const [availableBalance, setAvailableBalance] = useState(50000000);
+  const [availableBalance, setAvailableBalance] = useState(550000000);
   const [selectedPlayers, setSelectedPlayers] = useState([]);
   const totalPlayers = 25;
 
@@ -29,6 +30,11 @@ function App() {
       // return the balance of deleted player into main balance.
       setAvailableBalance(availableBalance + removedPlayer.price);
     }
+
+    toast(`${removedPlayer.name} removed from your select panel.`, {
+      position: "bottom-right",
+      theme: "dark",
+    })
   }
 
 
@@ -39,7 +45,7 @@ function App() {
     <>
       <Navbar availableBalance={availableBalance}></Navbar>
       <div className="players-container w-10/12 mx-auto my-4">
-        <div className="toggle-bar flex justify-between items-center">
+        <div className="toggle-bar flex flex-col md:flex-row gap-2 justify-between items-center">
           <h2 className='capitalize text-3xl text-slate-500 font-bold'>{toggleAvailableSelectedBtn ? "available players" : "selected players"}</h2>
           <div className="toggle-btn flex gap-2">
             <button onClick={() => SetToggleAvailableSelectedBtn(true)} className={`border py-2 cursor-pointer px-4 ${toggleAvailableSelectedBtn && "bg-green-500"}`}>Available ({totalPlayers - selectedPlayers.length})</button>
@@ -60,6 +66,9 @@ function App() {
         }
 
       </div>
+
+      {/* toast container here */}
+      <ToastContainer></ToastContainer>
     </>
   )
 }

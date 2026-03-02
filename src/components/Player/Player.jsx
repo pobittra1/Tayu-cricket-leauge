@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 const Player = ({ player, availableBalance, setAvailableBalance, selectedPlayers, setSelectedPlayers }) => {
 
@@ -8,12 +9,23 @@ const Player = ({ player, availableBalance, setAvailableBalance, selectedPlayers
 
     const handleUpdateTotalBalanceAfterChoosePlayer = (player) => {
         if (availableBalance < player.price) {
-            alert("Your Balance is too low");
+            toast("Your Balance is too low");
             return;
         }
         setAvailableBalance(availableBalance - player.price);
+        if (selectedPlayers.length === 6) {
+            toast("can't add more than 6 player");
+            return;
+        }
         const newPlayers = [...selectedPlayers, player];
         setSelectedPlayers(newPlayers);
+
+        toast.success(`${player.name} selected`, {
+            position: "bottom-right",
+            autoClose: 2000,
+            hideProgressBar: true,
+            theme: "dark"
+        });
 
     }
 
@@ -46,10 +58,13 @@ const Player = ({ player, availableBalance, setAvailableBalance, selectedPlayers
                 </div>
 
                 <div className="card-actions mt-4">
-                    <button disabled={isSelected} onClick={() => {
-                        setIsSelected(true)
-                        handleUpdateTotalBalanceAfterChoosePlayer(player)
-                    }} className="btn btn-success btn-sm w-full">
+                    <button
+                        onClick={() => {
+                            setIsSelected(true);
+                            handleUpdateTotalBalanceAfterChoosePlayer(player);
+                        }}
+                        disabled={isSelected || selectedPlayers.length > 6}
+                        className="btn btn-sm w-full btn-primary">
                         {isSelected ? "Selected" : "Choose Player"}
                     </button>
                 </div>
