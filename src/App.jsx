@@ -12,6 +12,7 @@ const playersPromise = fetch("/players.json").then(res => res.json());
 function App() {
   const [toggleAvailableSelectedBtn, SetToggleAvailableSelectedBtn] = useState(true);
 
+
   return (
     <>
       <Navbar></Navbar>

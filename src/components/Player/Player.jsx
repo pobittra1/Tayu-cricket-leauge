@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 
 const Player = ({ player }) => {
-    console.log(player);
+
     const { name, role, country, image, price, rating, batting_style,
         bowling_style } = player;
-    console.log(image);
+    const [isSelected, setIsSelected] = useState(false);
 
     return (
         <div className="card bg-base-100 shadow-xl hover:shadow-2xl transition duration-300">
@@ -35,8 +35,8 @@ const Player = ({ player }) => {
                 </div>
 
                 <div className="card-actions mt-4">
-                    <button className="btn btn-success btn-sm w-full">
-                        Choose Player
+                    <button disabled={isSelected} onClick={() => setIsSelected(true)} className="btn btn-success btn-sm w-full">
+                        {isSelected ? "Selected" : "Choose Player"}
                     </button>
                 </div>
             </div>
