@@ -1,7 +1,18 @@
 const SelectedPlayers = () => {
     return (
-        <div>
-            selected player is here
+        <div className="selected-players-container">
+            <ul>
+                <li>
+                    <div>
+                        <img src="" alt="image here" />
+                        <div className="info">
+                            <p className="name"></p>
+                            <p className="batting-style"></p>
+                        </div>
+                    </div>
+                    <button>delete</button>
+                </li>
+            </ul>
         </div>
     );
 };

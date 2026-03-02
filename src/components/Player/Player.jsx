@@ -5,14 +5,21 @@ const Player = ({ player, availableBalance, setAvailableBalance }) => {
     const { name, role, country, image, price, rating, batting_style,
         bowling_style } = player;
     const [isSelected, setIsSelected] = useState(false);
+    const [selectedPlayers, setSelectedPlayers] = useState([]);
+    console.log(selectedPlayers);
 
-    const handleUpdateTotalBalanceAfterChoosePlayer = (price) => {
-        if (availableBalance < price) {
+    const handleUpdateTotalBalanceAfterChoosePlayer = (player) => {
+        console.log(player);
+        if (availableBalance < player.price) {
             alert("Your Balance is too low");
             return;
         }
-        setAvailableBalance(availableBalance - price);
+        setAvailableBalance(availableBalance - player.price);
+        const newPlayers = [...selectedPlayers, player];
+        setSelectedPlayers(newPlayers);
+
     }
+    console.log(selectedPlayers);
 
     return (
         <div className="card bg-base-100 shadow-xl hover:shadow-2xl transition duration-300">
@@ -45,7 +52,7 @@ const Player = ({ player, availableBalance, setAvailableBalance }) => {
                 <div className="card-actions mt-4">
                     <button disabled={isSelected} onClick={() => {
                         setIsSelected(true)
-                        handleUpdateTotalBalanceAfterChoosePlayer(price)
+                        handleUpdateTotalBalanceAfterChoosePlayer(player)
                     }} className="btn btn-success btn-sm w-full">
                         {isSelected ? "Selected" : "Choose Player"}
                     </button>
