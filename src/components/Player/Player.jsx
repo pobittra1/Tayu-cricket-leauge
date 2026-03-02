@@ -1,10 +1,18 @@
 import React, { useState } from "react";
 
-const Player = ({ player }) => {
+const Player = ({ player, availableBalance, setAvailableBalance }) => {
 
     const { name, role, country, image, price, rating, batting_style,
         bowling_style } = player;
     const [isSelected, setIsSelected] = useState(false);
+
+    const handleUpdateTotalBalanceAfterChoosePlayer = (price) => {
+        if (availableBalance < price) {
+            alert("Your Balance is too low");
+            return;
+        }
+        setAvailableBalance(availableBalance - price);
+    }
 
     return (
         <div className="card bg-base-100 shadow-xl hover:shadow-2xl transition duration-300">
@@ -30,12 +38,15 @@ const Player = ({ player }) => {
                 </div>
 
                 <div className="flex justify-between items-center mt-3">
-                    <span className="badge badge-primary">${price}</span>
+                    <span className="badge badge-primary">৳ {price}</span>
                     <span className="badge badge-outline">⭐ {rating}</span>
                 </div>
 
                 <div className="card-actions mt-4">
-                    <button disabled={isSelected} onClick={() => setIsSelected(true)} className="btn btn-success btn-sm w-full">
+                    <button disabled={isSelected} onClick={() => {
+                        setIsSelected(true)
+                        handleUpdateTotalBalanceAfterChoosePlayer(price)
+                    }} className="btn btn-success btn-sm w-full">
                         {isSelected ? "Selected" : "Choose Player"}
                     </button>
                 </div>
